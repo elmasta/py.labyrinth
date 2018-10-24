@@ -5,7 +5,7 @@
 #W = Wall tile
 #F = Floor tile
 
-LEVEL = [
+level = [
     "WWWWWWWWWWWWWWW",
     "WFWFFFWFFFFFFFW",
     "WFWWWFWFWFWWWFW",
@@ -27,11 +27,10 @@ LEVEL = [
 #each item should be put in a dead end, you should modifie this list
 #if you modifie the labyrinth above
 possible_item_position = [
-(1 * 40, 6 * 40), (1 * 40, 9 * 40), (1 * 40, 11 * 40), (1 * 40, 13 * 40),
-(3 * 40, 1 * 40), (3 * 40, 3 * 40), (4 * 40, 11 * 40), (5 * 40, 6 * 40),
-(6 * 40, 7 * 40), (6 * 40, 9 * 40), (7 * 40, 5 * 40), (11 * 40, 3 * 40),
-(11 * 40, 5 * 40), (11 * 40, 7 * 40), (11 * 40, 9 * 40), (11 * 40, 13 * 40),
-(13 * 40, 9 * 40)
+    (3 * 40, 1 * 40), (3 * 40, 3 * 40), (4 * 40, 11 * 40), (5 * 40, 6 * 40),
+    (6 * 40, 7 * 40), (6 * 40, 9 * 40), (7 * 40, 5 * 40), (11 * 40, 3 * 40),
+    (11 * 40, 5 * 40), (11 * 40, 7 * 40), (11 * 40, 9 * 40),
+    (11 * 40, 13 * 40), (13 * 40, 9 * 40)
 ]
 
 #a tile is 40 pixels wide so the cordinate for each sprite is multiplied by 40

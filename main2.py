@@ -6,6 +6,10 @@ from classes import *
 from data import *
 from pygame.locals import *
 
+
+
 labyrinth_generation = Generation()
-labyrinth_generation.display
-labyrinth_generation.item_placement
+character_control = Player()
+labyrinth_generation.display(floor, window)
+labyrinth_generation.item_placement(window)
+character_control.PlayerMovement(labyrinth_generation.layout)
