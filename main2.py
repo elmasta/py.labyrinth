@@ -6,10 +6,11 @@ from classes import *
 from data import *
 from pygame.locals import *
 
+def main():
+    pygame.init()
+    pygame.time.Clock().tick(30)
+    main_game = Game()
+    main_game.game_init()
+    main_game.game_loop()
 
-
-labyrinth_generation = Generation()
-character_control = Player()
-labyrinth_generation.display(floor, window)
-labyrinth_generation.item_placement(window)
-character_control.PlayerMovement(labyrinth_generation.layout)
+main()
