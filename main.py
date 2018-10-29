@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*
+
 import pygame
 from func import *
 from data import *
@@ -7,7 +10,6 @@ keep_playing = 1
 
 pygame.init()
 pygame.time.Clock().tick(30)
-
 create_labyrinth(level)
 player_position, player = create_player()
 ether_position, needle_position, syringe_position, plastic_tube_position =\
