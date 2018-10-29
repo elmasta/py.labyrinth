@@ -8,28 +8,43 @@ from data import *
 class Generation:
 
     def __init__(self):
-        self.layout = level
+        self.layout = []
         self.ether_position = possible_item_position.pop(randrange(17))
         self.needle_position = possible_item_position.pop(randrange(16))
         self.syringe_position = possible_item_position.pop(randrange(15))
         self.plastic_tube_position = possible_item_position.pop(randrange(14))
 
+    def labyrinth_randomiser(self):
+        string_nb = 0
+        NW = NW_labyrinth_parts.pop(randrange(4))
+        NE = NE_labyrinth_parts.pop(randrange(4))
+        while string_nb != 8:
+            self.layout.append(NW[string_nb] + NE[string_nb])
+            string_nb += 1
+        string_nb = 0
+        SW = SW_labyrinth_parts.pop(randrange(4))
+        SE = SE_labyrinth_parts.pop(randrange(4))
+        while string_nb != 7:
+            self.layout.append(SW[string_nb] + SE[string_nb])
+            string_nb += 1
+        print(NW[8], NE[8], SW[7], SE[7])
+
     def fixed_elements_display(self, floor, window):
         """Méthode permettant d'afficher le niveau en fonction
-        de la liste de structure renvoyée par generer()"""        
+        de la liste de structure renvoyée par generer()"""
         wall = pygame.image.load("sprites/walls.png").convert()
         guardian = pygame.image.load("sprites/Gardien.png").convert()
         guardian.set_colorkey((255, 0, 255))
         list_index = 0
-        string = 0
-        while string != 15:
-            for element in self.layout[string]:
+        string_nb = 0
+        while string_nb != 15:
+            for element in self.layout[string_nb]:
                 if element is "W":
-                    window.blit(wall, (list_index * 40, string * 40))
+                    window.blit(wall, (list_index * 40, string_nb * 40))
                 else:
-                    window.blit(floor, (list_index * 40, string * 40))
+                    window.blit(floor, (list_index * 40, string_nb * 40))
                 list_index += 1
-            string += 1
+            string_nb += 1
             list_index = 0
         window.blit(guardian, guardian_position)
 
@@ -134,6 +149,7 @@ class Game:
         self.character_control = Player()
 
     def game_init(self):
+        self.labyrinth_generation.labyrinth_randomiser()
         self.labyrinth_generation.fixed_elements_display(self.FLOOR, self.WINDOW)
         self.labyrinth_generation.item_placement_display(self.WINDOW)
         self.character_control.player_generation()
