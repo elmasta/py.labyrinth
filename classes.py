@@ -20,17 +20,17 @@ class Generation:
         wall = pygame.image.load("sprites/walls.png").convert()
         guardian = pygame.image.load("sprites/Gardien.png").convert()
         guardian.set_colorkey((255, 0, 255))
-        x = 0
+        list_index = 0
         string = 0
         while string != 15:
             for element in self.layout[string]:
                 if element is "W":
-                    window.blit(wall, (x * 40, string * 40))
+                    window.blit(wall, (list_index * 40, string * 40))
                 else:
-                    window.blit(floor, (x * 40, string * 40))
-                x += 1
+                    window.blit(floor, (list_index * 40, string * 40))
+                list_index += 1
             string += 1
-            x = 0
+            list_index = 0
         window.blit(guardian, guardian_position)
 
     def item_placement_display(self, window):
