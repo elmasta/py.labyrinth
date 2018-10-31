@@ -168,7 +168,7 @@ SE_labyrinth_part_three = [
     "3"
 ]
 SE_labyrinth_part_four = [
-    "WWWWWWW",
+    "FWWWWWW",
     "FFFFWFW",
     "FWFWWFW",
     "FWFFFFW",
