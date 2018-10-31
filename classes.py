@@ -9,10 +9,10 @@ class Generation:
 
     def __init__(self):
         self.layout = []
-        self.ether_position = possible_item_position.pop(randrange(17))
-        self.needle_position = possible_item_position.pop(randrange(16))
-        self.syringe_position = possible_item_position.pop(randrange(15))
-        self.plastic_tube_position = possible_item_position.pop(randrange(14))
+        self.possible_item_position = []
+        self.ether_position = 0
+        self.needle_position = 0
+        self.plastic_tube_position = 0
 
     def labyrinth_randomiser(self):
         string_nb = 0
@@ -29,38 +29,48 @@ class Generation:
             string_nb += 1
         print(NW[8], NE[8], SW[7], SE[7])
 
-    def fixed_elements_display(self, floor, window):
+    def selected_labyrinth_scan(self, floor, window):
         """Méthode permettant d'afficher le niveau en fonction
         de la liste de structure renvoyée par generer()"""
         wall = pygame.image.load("sprites/walls.png").convert()
+        exit_labyrinth = pygame.image.load("sprites/exit_sign.png").convert()
         guardian = pygame.image.load("sprites/Gardien.png").convert()
         guardian.set_colorkey((255, 0, 255))
-        list_index = 0
+        string_index = 0
         string_nb = 0
         while string_nb != 15:
-            for element in self.layout[string_nb]:
-                if element is "W":
-                    window.blit(wall, (list_index * 40, string_nb * 40))
+            for tile in self.layout[string_nb]:
+                if tile == "W":
+                    window.blit(wall, (string_index * 40, string_nb * 40))
                 else:
-                    window.blit(floor, (list_index * 40, string_nb * 40))
-                list_index += 1
+                    window.blit(floor, (string_index * 40, string_nb * 40))
+                    if tile == "F":
+                        tile_env = self.layout[string_nb][string_index - 1: string_index]
+                        tile_env += self.layout[string_nb][string_index + 1: string_index + 2]
+                        tile_env += self.layout[string_nb - 1][string_index: string_index + 1]
+                        tile_env += self.layout[string_nb + 1][string_index: string_index + 1]
+                        possible_item_position_test = tile_env.count("W")
+                        if possible_item_position_test == 3:
+                            self.possible_item_position.append((string_index * 40, string_nb * 40))
+                string_index += 1
             string_nb += 1
-            list_index = 0
+            string_index = 0
         window.blit(guardian, guardian_position)
+        window.blit(exit_labyrinth, exit_position)
 
     def item_placement_display(self, window):
         ether = pygame.image.load("sprites/ether.png").convert()
         needle = pygame.image.load("sprites/aiguille.png").convert()
-        syringe = pygame.image.load("sprites/seringue.png").convert()
         plastic_tube = pygame.image.load("sprites/tube_plastique.png").\
             convert()
         ether.set_colorkey((255, 0, 255))
         needle.set_colorkey((255, 0, 255))
-        syringe.set_colorkey((255, 0, 255))
         plastic_tube.set_colorkey((255, 0, 255))
+        self.ether_position = self.possible_item_position.pop(randrange(len(self.possible_item_position)))
+        self.needle_position = self.possible_item_position.pop(randrange(len(self.possible_item_position)))
+        self.plastic_tube_position = self.possible_item_position.pop(randrange(len(self.possible_item_position)))
         window.blit(ether, self.ether_position)
         window.blit(needle, self.needle_position)
-        window.blit(syringe, self.syringe_position)
         window.blit(plastic_tube, self.plastic_tube_position)
 
 class Player:
@@ -72,7 +82,6 @@ class Player:
         self.player_position_tuple = 0
         self.picked_up_ether = 0
         self.picked_up_needle = 0
-        self.picked_up_syringe = 0
         self.picked_up_plastic_tube = 0
         self.victory_condition_marquer = ""
         self.keep_playing = 1
@@ -111,7 +120,7 @@ class Player:
             window.blit(self.player_picture, self.player_position)
 
     def victory_condition(self, ether_position, needle_position, 
-                          syringe_position, plastic_tube_position):
+                          plastic_tube_position):
         self.player_position_tuple = (
             self.player_position[0], self.player_position[1]
         )
@@ -123,19 +132,16 @@ class Player:
                 self.picked_up_needle == 0:
             self.victory_condition_marquer += "V"
             self.picked_up_needle = 1
-        elif self.player_position_tuple == syringe_position and\
-                self.picked_up_syringe == 0:
-            self.victory_condition_marquer += "V"
-            self.picked_up_syringe = 1
         elif self.player_position_tuple == plastic_tube_position and\
                 self.picked_up_plastic_tube == 0:
             self.victory_condition_marquer += "V"
             self.picked_up_plastic_tube = 1
-        if self.player_position_tuple == guardian_position and \
-                self.victory_condition_marquer == "VVVV":
+        if self.player_position_tuple == exit_position:
             print("victory")
             self.keep_playing = 0
-        elif self.player_position_tuple == guardian_position:
+        elif self.player_position_tuple == guardian_position and \
+                self.victory_condition_marquer != "VVV":
+            print(self.victory_condition_marquer)
             print("defeat")
             self.keep_playing = 0
 
@@ -150,7 +156,7 @@ class Game:
 
     def game_init(self):
         self.labyrinth_generation.labyrinth_randomiser()
-        self.labyrinth_generation.fixed_elements_display(self.FLOOR, self.WINDOW)
+        self.labyrinth_generation.selected_labyrinth_scan(self.FLOOR, self.WINDOW)
         self.labyrinth_generation.item_placement_display(self.WINDOW)
         self.character_control.player_generation()
         self.WINDOW.blit(self.character_control.player_picture, self.character_control.player_position)
@@ -174,6 +180,5 @@ class Game:
                     self.character_control.victory_condition(
                         self.labyrinth_generation.ether_position,
                         self.labyrinth_generation.needle_position,
-                        self.labyrinth_generation.syringe_position,
                         self.labyrinth_generation.plastic_tube_position
                     )
