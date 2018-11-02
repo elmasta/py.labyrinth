@@ -1,12 +1,13 @@
-"""Games data, can be modified without breaking the game"""
+"""Game data, can be modified without breaking the game"""
 
 #The labyrinth structure:
 #W = Wall tile
 #F = Floor tile
 #P = Player
 #G = gardian
-#North west parts are 8 x 8
-NW_labyrinth_part_one = [
+#E = exit
+#North west corner is a 8 x 8 square
+NW_LABYRINTH_PART_ONE = [
     "WWWWWWWW",
     "WPWFFWFF",
     "WFFFWWFW",
@@ -17,7 +18,7 @@ NW_labyrinth_part_one = [
     "WWWFWWWW",
     "1"
 ]
-NW_labyrinth_part_two = [
+NW_LABYRINTH_PART_TWO = [
     "WWWWWWWW",
     "WPFFWWFF",
     "WWWFFWFW",
@@ -28,7 +29,7 @@ NW_labyrinth_part_two = [
     "WWWFWWWW",
     "2"
 ]
-NW_labyrinth_part_three = [
+NW_LABYRINTH_PART_THREE = [
     "WWWWWWWW",
     "WPFFFWFF",
     "WFWFWWFW",
@@ -39,7 +40,7 @@ NW_labyrinth_part_three = [
     "WWWFWWWW",
     "3"
 ]
-NW_labyrinth_part_four = [
+NW_LABYRINTH_PART_FOUR = [
     "WWWWWWWW",
     "WPWFFFFF",
     "WFFFWWWW",
@@ -50,8 +51,8 @@ NW_labyrinth_part_four = [
     "WWWFWWWW",
     "4"
 ]
-#North east parts are 7 x 8
-NE_labyrinth_part_one = [
+#North east corner is a 7 x 8 square
+NE_LABYRINTH_PART_ONE = [
     "WWWWWWW",
     "FFFFFFW",
     "FWWWWFW",
@@ -62,7 +63,7 @@ NE_labyrinth_part_one = [
     "WWFWWFW",
     "1"
 ]
-NE_labyrinth_part_two = [
+NE_LABYRINTH_PART_TWO = [
     "WWWWWWW",
     "FFFFFFW",
     "FWWWWFW",
@@ -73,7 +74,7 @@ NE_labyrinth_part_two = [
     "WWFWWFW",
     "2"
 ]
-NE_labyrinth_part_three = [
+NE_LABYRINTH_PART_THREE = [
     "WWWWWWW",
     "FWFFFFW",
     "FWWFWFW",
@@ -84,7 +85,7 @@ NE_labyrinth_part_three = [
     "WWFWWFW",
     "3"
 ]
-NE_labyrinth_part_four = [
+NE_LABYRINTH_PART_FOUR = [
     "WWWWWWW",
     "FFFFFFW",
     "WFWWWFW",
@@ -95,8 +96,8 @@ NE_labyrinth_part_four = [
     "WWFFWFW",
     "4"
 ]
-#South west parts are 8 x 7
-SW_labyrinth_part_one = [
+#South west corner is a 8 x 7 square
+SW_LABYRINTH_PART_ONE = [
     "WFWFFFFF",
     "WFWFWWFW",
     "WFWFFWWW",
@@ -106,7 +107,7 @@ SW_labyrinth_part_one = [
     "WWWWWWWW",
     "1"
 ]
-SW_labyrinth_part_two = [
+SW_LABYRINTH_PART_TWO = [
     "WFFFFFFF",
     "WFWFFWFW",
     "WWWWWWFW",
@@ -116,7 +117,7 @@ SW_labyrinth_part_two = [
     "WWWWWWWW",
     "2"
 ]
-SW_labyrinth_part_three = [
+SW_LABYRINTH_PART_THREE = [
     "WFFFWFFF",
     "WWWFWFWW",
     "WFFFWWWW",
@@ -126,7 +127,7 @@ SW_labyrinth_part_three = [
     "WWWWWWWW",
     "3"
 ]
-SW_labyrinth_part_four = [
+SW_LABYRINTH_PART_FOUR = [
     "WFFFWFFW",
     "WFWFFWFF",
     "WFWWFWWW",
@@ -136,8 +137,8 @@ SW_labyrinth_part_four = [
     "WWWWWWWW",
     "4"
 ]
-#South east parts are 7 x 7
-SE_labyrinth_part_one = [
+#South east corner is a 7 x 7 square
+SE_LABYRINTH_PART_ONE = [
     "FWFWWFW",
     "FFFFWFW",
     "FWWWWWW",
@@ -147,7 +148,7 @@ SE_labyrinth_part_one = [
     "WWWWWEW",
     "1"
 ]
-SE_labyrinth_part_two = [
+SE_LABYRINTH_PART_TWO = [
     "FFFFFFW",
     "FWWFWFW",
     "FWFFWFW",
@@ -157,9 +158,9 @@ SE_labyrinth_part_two = [
     "WWWWWEW",
     "2"
 ]
-SE_labyrinth_part_three = [
+SE_LABYRINTH_PART_THREE = [
     "FFFFFFW",
-    "WFWFWFW",
+    "FFWFWFW",
     "WWWWWFW",
     "WFFFFFW",
     "WWFWFWW",
@@ -167,7 +168,7 @@ SE_labyrinth_part_three = [
     "WWWWWEW",
     "3"
 ]
-SE_labyrinth_part_four = [
+SE_LABYRINTH_PART_FOUR = [
     "FWWWWWW",
     "FFFFWFW",
     "FWFWWFW",
@@ -177,34 +178,35 @@ SE_labyrinth_part_four = [
     "WWWWWEW",
     "4"
 ]
-NW_labyrinth_parts = [
-    NW_labyrinth_part_one,
-    NW_labyrinth_part_two,
-    NW_labyrinth_part_three,
-    NW_labyrinth_part_four
+NW_LABYRINTH_PARTS = [
+    NW_LABYRINTH_PART_ONE,
+    NW_LABYRINTH_PART_TWO,
+    NW_LABYRINTH_PART_THREE,
+    NW_LABYRINTH_PART_FOUR
 ]
-NE_labyrinth_parts = [
-    NE_labyrinth_part_one,
-    NE_labyrinth_part_two,
-    NE_labyrinth_part_three,
-    NE_labyrinth_part_four
+NE_LABYRINTH_PARTS = [
+    NE_LABYRINTH_PART_ONE,
+    NE_LABYRINTH_PART_TWO,
+    NE_LABYRINTH_PART_THREE,
+    NE_LABYRINTH_PART_FOUR
 ]
-SW_labyrinth_parts = [
-    SW_labyrinth_part_one,
-    SW_labyrinth_part_two,
-    SW_labyrinth_part_three,
-    SW_labyrinth_part_four,
+SW_LABYRINTH_PARTS = [
+    SW_LABYRINTH_PART_ONE,
+    SW_LABYRINTH_PART_TWO,
+    SW_LABYRINTH_PART_THREE,
+    SW_LABYRINTH_PART_FOUR,
 ]
-SE_labyrinth_parts = [
-    SE_labyrinth_part_one,
-    SE_labyrinth_part_two,
-    SE_labyrinth_part_three,
-    SE_labyrinth_part_four,
+SE_LABYRINTH_PARTS = [
+    SE_LABYRINTH_PART_ONE,
+    SE_LABYRINTH_PART_TWO,
+    SE_LABYRINTH_PART_THREE,
+    SE_LABYRINTH_PART_FOUR,
 ]
 
 #0, 0 being the top left corner and 14, 14 the bottom right
 
-#a tile is 40 pixels wide so the cordinate for each sprite is multiplied by 40
-MacGyver_starting_position = (1 * 40, 1 * 40)
-guardian_position = (13 * 40, 13 * 40)
-exit_position = (13 * 40, 14 * 40)
+#A tile is 40 pixels wide and 40 pixels tall so the cordinate for each sprite
+#is multiplied by 40
+MACGYVER_STARTING_POSITION = (1 * 40, 1 * 40)
+GUARDIAN_POSITION = (13 * 40, 13 * 40)
+EXIT_POSITION = (13 * 40, 14 * 40)
