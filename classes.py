@@ -4,9 +4,8 @@ import pygame
 from pygame.locals import *
 
 from data import NW_LABYRINTH_PARTS, NE_LABYRINTH_PARTS, SW_LABYRINTH_PARTS,\
-SE_LABYRINTH_PARTS, GUARDIAN_POSITION, EXIT_POSITION,\
-MACGYVER_STARTING_POSITION
-
+    SE_LABYRINTH_PARTS, GUARDIAN_POSITION, EXIT_POSITION,\
+    MACGYVER_STARTING_POSITION
 
 
 class LabyrinthGeneration:
@@ -44,7 +43,17 @@ class LabyrinthGeneration:
             self.layout.append(south_west[string_nb] + south_east[string_nb])
             string_nb += 1
         self.labyrinth_selected = north_west[8] + north_east[8]\
-        + south_west[7] + south_east[7]
+            + south_west[7] + south_east[7]
+
+    def labyrinth_file(self, file):
+        """This methode is used in case there's LEVEL file in the root
+        folder. it open that file to retrieve the labyrinth."""
+        for line in file:
+            level_line = ""
+            for tile in line:
+                if tile != '\n':
+                    level_line += tile
+            self.layout.append(level_line)
 
     def selected_labyrinth_scan(self, floor, window):
         """Method that scan the labyrinth created by the method
@@ -64,19 +73,19 @@ class LabyrinthGeneration:
                     window.blit(wall, (string_index * 40, string_nb * 40))
                 else:
                     window.blit(floor, (string_index * 40, string_nb * 40))
-                    #Scan every coordinate if it's a floor tile surrounded by
-                    #3 wall tiles.
-                    #Return a list of coordinate that can be used to spawn
-                    #items.
+                    #  Scan every coordinate if it's a floor tile surrounded
+                    #  by 3 wall tiles.
+                    #  Return a list of coordinates that can be used to spawn
+                    #  items.
                     if tile == "F":
-                        tile_env = self.layout[string_nb]\
-                            [string_index - 1: string_index]
-                        tile_env += self.layout[string_nb]\
-                            [string_index + 1: string_index + 2]
-                        tile_env += self.layout[string_nb - 1]\
-                            [string_index: string_index + 1]
-                        tile_env += self.layout[string_nb + 1]\
-                            [string_index: string_index + 1]
+                        tile_env = self.layout[string_nb][
+                            string_index - 1: string_index]
+                        tile_env += self.layout[string_nb][
+                            string_index + 1: string_index + 2]
+                        tile_env += self.layout[string_nb - 1][
+                            string_index: string_index + 1]
+                        tile_env += self.layout[string_nb + 1][
+                            string_index: string_index + 1]
                         possible_item_position_test = tile_env.count("W")
                         if possible_item_position_test == 3:
                             self.possible_item_position.append(
@@ -133,8 +142,8 @@ class Player:
         """Method that make the player move down if the down arrow key
         is pressed unless there's a wall on the way."""
 
-        if layout[self.player_position[1] // 40 + 1]\
-                [self.player_position[0] // 40] != "W":
+        if layout[self.player_position[1] // 40 + 1][
+                self.player_position[0] // 40] != "W":
             window.blit(floor, self.player_position)
             self.player_position = self.player_position.move(0, 40)
             window.blit(floor, self.player_position)
@@ -144,8 +153,8 @@ class Player:
         """Method that make the player move up if the up arrow key is
         pressed unless there's a wall on the way."""
 
-        if layout[self.player_position[1] // 40 - 1]\
-                [self.player_position[0] // 40] != "W":
+        if layout[self.player_position[1] // 40 - 1][
+                self.player_position[0] // 40] != "W":
             window.blit(floor, self.player_position)
             self.player_position = self.player_position.move(0, -40)
             window.blit(floor, self.player_position)
@@ -155,8 +164,8 @@ class Player:
         """Method that make the player move right if the right arrow
         key is pressed unless there's a wall on the way."""
 
-        if layout[self.player_position[1] // 40]\
-                [self.player_position[0] // 40 + 1] != "W":
+        if layout[self.player_position[1] // 40][
+                self.player_position[0] // 40 + 1] != "W":
             window.blit(floor, self.player_position)
             self.player_position = self.player_position.move(40, 0)
             window.blit(floor, self.player_position)
@@ -166,8 +175,8 @@ class Player:
         """Method that make the player move left if the left arrow key
         is pressed unless there's a wall on the way."""
 
-        if layout[self.player_position[1] // 40]\
-                [self.player_position[0] // 40 - 1] != "W":
+        if layout[self.player_position[1] // 40][
+                self.player_position[0] // 40 - 1] != "W":
             window.blit(floor, self.player_position)
             self.player_position = self.player_position.move(-40, 0)
             window.blit(floor, self.player_position)
@@ -198,7 +207,7 @@ class Player:
             self.picked_up_plastic_tube = 1
 
         key_pressed = 1
-        #victory conditions
+        #  victory conditions
         if player_position == EXIT_POSITION:
             victory = pygame.image.load("sprites/victory.png").convert()
             self.end_game = 1
@@ -208,7 +217,7 @@ class Player:
                 for event in pygame.event.get():
                     if event.type == KEYDOWN:
                         key_pressed = 0
-        #defeat conditions
+        #  defeat conditions
         elif player_position == GUARDIAN_POSITION\
                 and self.victory_condition_marquer != "VVV":
             self.end_game = 1
@@ -275,39 +284,46 @@ class Game:
         displaying the labyrinth, displaying the HUD and initialisation
         of the player starting point."""
 
-        #labyrinth layout (floor, walls and items) and display initialisation
+        #  labyrinth layout (floor, walls and items) and display
+        #  initialisation
         pygame.init()
         pygame.time.Clock().tick(30)
-        self.labyrinth_generation.labyrinth_randomiser()
+        try:
+            with open("LEVEL", "r") as file:
+                self.labyrinth_generation.labyrinth_file(file)
+        except IOError:
+            self.labyrinth_generation.labyrinth_randomiser()
         self.labyrinth_generation.selected_labyrinth_scan(self.FLOOR,
                                                           self.WINDOW)
         self.labyrinth_generation.item_placement_display(
             self.WINDOW, self.ETHER, self.NEEDLE, self.PLASTIC_TUBE)
 
-        #HUD initialisation, background is only useful when reseting the game
+        #  HUD initialisation, background is only useful when reseting the
+        #  game
         self.WINDOW.blit(self.HUD_BACKGROUND, (601, 0))
         self.WINDOW.blit(self.HUD_BACKGROUND, (601, 350))
         self.WINDOW.blit(self.HUD_INVENTORY, (611, 350))
         self.WINDOW.blit(self.HUD_GAME_RULES, (601, 75))
         self.WINDOW.blit(self.HUD_CONTROL_SCHEME, (601, 462))
-        self.WINDOW.blit(self.HUD_DIGIT_HEADER, (601, 0))
         pixel_length_position = 641
-        for number in self.labyrinth_generation.labyrinth_selected:
-            if number == "1":
-                self.WINDOW.blit(self.HUD_DIGIT_ONE, (pixel_length_position,
-                                                      28))
-            elif number == "2":
-                self.WINDOW.blit(self.HUD_DIGIT_TWO, (pixel_length_position,
-                                                      28))
-            elif number == "3":
-                self.WINDOW.blit(self.HUD_DIGIT_THREE, (pixel_length_position,
-                                                        28))
-            else:
-                self.WINDOW.blit(self.HUD_DIGIT_FOUR, (pixel_length_position,
-                                                       28))
-            pixel_length_position += 20
+        if self.labyrinth_generation.labyrinth_selected != 0:
+            self.WINDOW.blit(self.HUD_DIGIT_HEADER, (601, 0))
+            for number in self.labyrinth_generation.labyrinth_selected:
+                if number == "1":
+                    self.WINDOW.blit(self.HUD_DIGIT_ONE, (
+                        pixel_length_position, 28))
+                elif number == "2":
+                    self.WINDOW.blit(self.HUD_DIGIT_TWO, (
+                        pixel_length_position, 28))
+                elif number == "3":
+                    self.WINDOW.blit(self.HUD_DIGIT_THREE, (
+                        pixel_length_position, 28))
+                else:
+                    self.WINDOW.blit(self.HUD_DIGIT_FOUR, (
+                        pixel_length_position, 28))
+                pixel_length_position += 20
 
-        #player initialisation
+        #  player initialisation
         self.character_control.player_generation()
         self.WINDOW.blit(self.character_control.player_picture,
                          self.character_control.player_position)

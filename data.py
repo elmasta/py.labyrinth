@@ -1,12 +1,12 @@
 """Game data, can be modified without breaking the game"""
 
-#The labyrinth structure:
-#W = Wall tile
-#F = Floor tile
-#P = Player
-#G = gardian
-#E = exit
-#North west corner is a 8 x 8 square
+#  The labyrinth structure:
+#  W = Wall tile
+#  F = Floor tile
+#  P = Player
+#  G = gardian
+#  E = exit
+#  North west corner is a 8 x 8 square
 NW_LABYRINTH_PART_ONE = [
     "WWWWWWWW",
     "WPWFFWFF",
@@ -51,7 +51,7 @@ NW_LABYRINTH_PART_FOUR = [
     "WWWFWWWW",
     "4"
 ]
-#North east corner is a 7 x 8 square
+#  North east corner is a 7 x 8 square
 NE_LABYRINTH_PART_ONE = [
     "WWWWWWW",
     "FFFFFFW",
@@ -96,7 +96,7 @@ NE_LABYRINTH_PART_FOUR = [
     "WWFFWFW",
     "4"
 ]
-#South west corner is a 8 x 7 square
+#  South west corner is a 8 x 7 square
 SW_LABYRINTH_PART_ONE = [
     "WFWFFFFF",
     "WFWFWWFW",
@@ -137,7 +137,7 @@ SW_LABYRINTH_PART_FOUR = [
     "WWWWWWWW",
     "4"
 ]
-#South east corner is a 7 x 7 square
+#  South east corner is a 7 x 7 square
 SE_LABYRINTH_PART_ONE = [
     "FWFWWFW",
     "FFFFWFW",
@@ -203,10 +203,10 @@ SE_LABYRINTH_PARTS = [
     SE_LABYRINTH_PART_FOUR,
 ]
 
-#0, 0 being the top left corner and 14, 14 the bottom right
+#  0, 0 being the top left corner and 14, 14 the bottom right
 
-#A tile is 40 pixels wide and 40 pixels tall so the cordinate for each sprite
-#is multiplied by 40
+#  A tile is 40 pixels wide and 40 pixels tall so the cordinate for each
+#  sprite is multiplied by 40
 MACGYVER_STARTING_POSITION = (1 * 40, 1 * 40)
 GUARDIAN_POSITION = (13 * 40, 13 * 40)
 EXIT_POSITION = (13 * 40, 14 * 40)
